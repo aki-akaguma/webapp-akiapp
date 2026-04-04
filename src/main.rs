@@ -8,6 +8,8 @@ mod backends;
 mod components;
 mod views;
 
+use components::*;
+
 fn main() {
     // You can set the ports and IP manually with env vars:
     //   server launch:
@@ -51,6 +53,15 @@ fn App() -> Element {
         document::Link { rel: "stylesheet", href: MAIN_CSS }
         document::Link { rel: "stylesheet", href: TAILWIND_CSS }
 
-        div { id: "app-main", class: "app-main", Home {} }
+        div { id: "app-main", class: "app-main", Router::<Route> {} }
     }
+}
+
+#[derive(Routable, Clone, PartialEq)]
+enum Route {
+    #[route("/")]
+    Home,
+    //
+    #[route("/:..segments")]
+    PageNotFound { segments: Vec<String> },
 }
