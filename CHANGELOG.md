@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Changed
+* `dioxus_logger` to `dioxus::logger`
 * backend interface: return type of `list_apps()`
 
 

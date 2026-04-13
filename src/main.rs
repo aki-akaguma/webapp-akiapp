@@ -20,10 +20,10 @@ fn main() {
     console_error_panic_hook::set_once();
 
     #[cfg(not(debug_assertions))]
-    let level = dioxus_logger::tracing::Level::INFO;
+    let level = dioxus::logger::tracing::Level::INFO;
     #[cfg(debug_assertions)]
-    let level = dioxus_logger::tracing::Level::DEBUG;
-    dioxus_logger::init(level).expect("failed to init logger");
+    let level = dioxus::logger::tracing::Level::DEBUG;
+    dioxus::logger::init(level).expect("failed to init logger");
 
     dioxus::launch(App);
 }

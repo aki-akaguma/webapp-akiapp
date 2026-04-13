@@ -26,7 +26,6 @@ dioxus-fullstack = { path = "./patched/dioxus-fullstack-0.7.5" }
 dioxus = { version = "0.7.5", features = ["fullstack", "router"] }
 dioxus-fullstack = "0.7.5"
 dioxus-desktop = { version = "0.7.5", optional = true }
-dioxus-logger = "0.7.4"
 
 # depend on dioxus
 anyhow = { version = "1.0.98" }

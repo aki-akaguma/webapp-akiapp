@@ -107,5 +107,5 @@ linux = true
 windows = false
 [dev_apps.android]
 wva = false
-aarch64 = false
+aarch64 = true
 x86_64 = false
