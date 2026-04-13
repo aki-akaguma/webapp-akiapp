@@ -1,5 +1,6 @@
 use serde::{Deserialize, Serialize};
 
+#[cfg(feature = "server")]
 #[derive(Default, Debug, Serialize, Deserialize)]
 pub struct Config {
     pub base: ConfBase,
@@ -7,6 +8,7 @@ pub struct Config {
     pub dev_apps: Vec<ConfApp>,
 }
 
+#[cfg(feature = "server")]
 #[derive(Default, Debug, Serialize, Deserialize)]
 pub struct ConfBase {
     base_path: String,
@@ -31,16 +33,12 @@ macro_rules! fn_is_xxx {
         #[allow(dead_code)]
         #[inline(always)]
         pub fn $fnm(&self) -> bool {
-            if let Some(b) = self.$nm {
-                b
-            } else {
-                false
-            }
+            self.$nm.unwrap_or_default()
         }
     };
 }
 
-#[derive(Default, Debug, Serialize, Deserialize)]
+#[derive(Clone, Default, Debug, Serialize, Deserialize, PartialEq)]
 pub struct ConfApp {
     name: String,
     desc: Option<String>,
@@ -67,11 +65,7 @@ impl ConfApp {
     #[allow(dead_code)]
     #[inline(always)]
     pub fn is_web(&self) -> bool {
-        if let Some(b) = self.web {
-            b
-        } else {
-            false
-        }
+        self.web.unwrap_or_default()
     }
     //
     #[allow(dead_code)]
@@ -92,7 +86,7 @@ impl ConfApp {
     fn_is_xxx_yyy!(is_android_x86_64, android);
 }
 
-#[derive(Clone, Default, Debug, Serialize, Deserialize)]
+#[derive(Clone, Default, Debug, Serialize, Deserialize, PartialEq)]
 pub struct ConfDesktop {
     linux: Option<bool>,
     windows: Option<bool>,
@@ -102,7 +96,7 @@ impl ConfDesktop {
     fn_is_xxx!(is_desktop_windows, windows);
 }
 
-#[derive(Clone, Default, Debug, Serialize, Deserialize)]
+#[derive(Clone, Default, Debug, Serialize, Deserialize, PartialEq)]
 pub struct ConfAndroid {
     wva: Option<bool>,
     aarch64: Option<bool>,

@@ -36,6 +36,7 @@ const APP_IMG: Asset = asset!("/assets/app.png");
 const EMPTY_IMG: Asset = asset!("/assets/empty.png");
 const WEBAPP_IMG: Asset = asset!("/assets/img/webapp.png");
 const ANDROID_IMG: Asset = asset!("/assets/img/android.png");
+const LINUX_IMG: Asset = asset!("/assets/img/linux.jpg");
 
 #[component]
 fn App() -> Element {

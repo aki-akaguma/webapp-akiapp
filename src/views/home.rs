@@ -7,6 +7,7 @@ pub fn Home() -> Element {
     let page_desc = "These are apps created by Aki. I aimed for simplicity and clarity.";
     let webapp_desc = "Web application. Tap to use immediately.";
     let android_desc = "Android APK. Tap to download and install.";
+    let linux_desc = "Linux AppImage. Tap to download and run.";
     //
     rsx! {
         div { class: "app-header",
@@ -32,6 +33,14 @@ pub fn Home() -> Element {
                     src: crate::ANDROID_IMG,
                 }
                 p { "{android_desc}" }
+            }
+            div { class: "app-section-linux",
+                img {
+                    class: "app-section-img",
+                    alt: "Linux",
+                    src: crate::LINUX_IMG,
+                }
+                p { "{linux_desc}" }
             }
         }
         List { is_devel: false }

@@ -15,6 +15,9 @@ clean:
 check:
 	cargo check
 
+test:
+	cargo test --features server
+
 apply-patch:
 	cargo patch-crate
 

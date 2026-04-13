@@ -34,6 +34,9 @@
   .app-section-android {
     @apply flex items-center gap-4 border-t sm:border-t-0 sm:border-l border-slate-800 pt-4 sm:pt-0 sm:pl-8
   }
+  .app-section-linux {
+    @apply flex items-center gap-4 border-t sm:border-t-0 sm:border-l border-slate-800 pt-4 sm:pt-0 sm:pl-8
+  }
   .app-section-img {
     @apply w-10 h-10 drop-shadow-lg
   }

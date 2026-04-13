@@ -7,7 +7,7 @@ name = "broinfo"
 desc = "A browser information utility."
 web = true
 [apps.desktop]
-linux = false
+linux = true
 windows = false
 [apps.android]
 wva = true
@@ -15,11 +15,11 @@ aarch64 = false
 x86_64 = false
 
 [[apps]]
-name = "cattonue"
+name = "cattongue"
 desc = "A cat image collection on the web."
 web = true
 [apps.desktop]
-linux = false
+linux = true
 windows = false
 [apps.android]
 wva = true
@@ -31,7 +31,7 @@ name = "purepic"
 desc = "A easy image processing tool."
 web = true
 [apps.desktop]
-linux = false
+linux = true
 windows = false
 [apps.android]
 wva = true
@@ -43,7 +43,7 @@ name = "pwgen"
 desc = "An easy password generator."
 web = true
 [apps.desktop]
-linux = false
+linux = true
 windows = false
 [apps.android]
 wva = true
@@ -55,7 +55,7 @@ name = "tap3beat"
 desc = "A beat viewing tool for beatmania."
 web = true
 [apps.desktop]
-linux = false
+linux = true
 windows = false
 [apps.android]
 wva = true
@@ -67,7 +67,7 @@ name = "test-inputfile"
 desc = "Testing file input functionality."
 web = true
 [dev_apps.desktop]
-linux = false
+linux = true
 windows = false
 [dev_apps.android]
 wva = true
@@ -79,7 +79,7 @@ name = "test-wasmworker"
 desc = "Testing WebAssembly WebWorker."
 web = true
 [dev_apps.desktop]
-linux = false
+linux = true
 windows = false
 [dev_apps.android]
 wva = true
@@ -91,9 +91,21 @@ name = "test-webworker"
 desc = "Testing standard WebWorker."
 web = true
 [dev_apps.desktop]
-linux = false
+linux = true
 windows = false
 [dev_apps.android]
 wva = true
+aarch64 = false
+x86_64 = false
+
+[[dev_apps]]
+name = "memboost"
+desc = "Memory booster"
+web = true
+[dev_apps.desktop]
+linux = true
+windows = false
+[dev_apps.android]
+wva = false
 aarch64 = false
 x86_64 = false
