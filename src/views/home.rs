@@ -51,5 +51,11 @@ pub fn Home() -> Element {
                 linux: linux_desc.to_string(),
             },
         }
+        crate::Version {}
+        div {
+            Link { to: crate::Route::Devel,
+                img { width: "16px", height: "16px", src: crate::EMPTY_IMG }
+            }
+        }
     }
 }

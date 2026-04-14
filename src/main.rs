@@ -25,6 +25,31 @@ fn main() {
     let level = dioxus::logger::tracing::Level::DEBUG;
     dioxus::logger::init(level).expect("failed to init logger");
 
+    // In the case of release desktop and release mobile,
+    // connect backend calls to public api
+    #[cfg(not(debug_assertions))]
+    #[cfg(any(feature = "desktop", feature = "mobile"))]
+    {
+        // Specify the URL that previously delpoyed the public webapp.
+        // This webapp was created with `dx bundle --web`.
+        let backend_url = "https://aki.omusubi.org/akiapp";
+        dioxus_fullstack::set_server_url(backend_url);
+    }
+
+    // In the case of only release desktop, set a window title
+    #[cfg(all(not(debug_assertions), feature = "desktop"))]
+    dioxus::LaunchBuilder::new()
+        .with_cfg(
+            Config::default().with_menu(None).with_window(
+                WindowBuilder::new()
+                    .with_maximized(false)
+                    .with_title("Aki's App List"),
+            ),
+        )
+        .launch(App);
+
+    // In the other case, simple launch app
+    #[cfg(any(debug_assertions, not(feature = "desktop")))]
     dioxus::launch(App);
 }
 
@@ -55,15 +80,7 @@ fn App() -> Element {
         document::Link { rel: "stylesheet", href: MAIN_CSS }
         document::Link { rel: "stylesheet", href: TAILWIND_CSS }
 
-        div { id: "app-main", class: "app-main",
-            Router::<Route> {}
-            Version {}
-            div {
-                a { href: "devel",
-                    img { width: "16px", height: "16px", src: EMPTY_IMG }
-                }
-            }
-        }
+        div { id: "app-main", class: "app-main", Router::<Route> {} }
     }
 }
 

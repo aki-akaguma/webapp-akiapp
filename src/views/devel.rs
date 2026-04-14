@@ -12,7 +12,7 @@ pub fn Devel() -> Element {
     rsx! {
         div { class: "app-header",
             h1 { class: "app-header-h font-bagel",
-                a { href: ".",
+                Link { to: crate::Route::Home,
                     img { class: "app-img", alt: "App", src: crate::APP_IMG }
                 }
                 p { "{page_header}" }
@@ -27,5 +27,6 @@ pub fn Devel() -> Element {
                 linux: linux_desc.to_string(),
             },
         }
+        crate::Version {}
     }
 }
