@@ -39,17 +39,17 @@ bundle-desktop:
 bundle-android-aarch64:
 	@rm -fr "target/dx"
 	dx bundle --android --release --target=aarch64-linux-android
-	./scripts/apk-icon-assemble-r.sh broinfo aarch64 resources/android
+	./scripts/apk-icon-assemble-r.sh akiapp aarch64 resources/android
 
 bundle-android-x86_64:
 	@rm -fr "target/dx"
 	dx bundle --android --release --target=x86_64-linux-android
-	./scripts/apk-icon-assemble-r.sh broinfo x86_64 resources/android
+	./scripts/apk-icon-assemble-r.sh akiapp x86_64 resources/android
 
 bundle-android-wv:
 	@rm -fr "target/dx"
-	./scripts/wv-apk-icon-assemble-r.sh broinfo resources/android ./scripts/android-webview-params.toml
+	./scripts/wv-apk-icon-assemble-r.sh akiapp resources/android ./scripts/android-webview-params.toml
 
 bundle-android-wva:
 	@rm -fr "target/dx"
-	./scripts/wva-apk-icon-assemble-r.sh broinfo resources/android resources/android ./scripts/android-webview-assets-params.toml
+	./scripts/wva-apk-icon-assemble-r.sh akiapp resources/android resources/android ./scripts/android-webview-assets-params.toml
