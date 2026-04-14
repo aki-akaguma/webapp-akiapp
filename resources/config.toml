@@ -109,3 +109,15 @@ windows = false
 wva = false
 aarch64 = true
 x86_64 = false
+
+[[dev_apps]]
+name = "akiapp"
+desc = "Aki's web index page"
+web = true
+[dev_apps.desktop]
+linux = true
+windows = false
+[dev_apps.android]
+wva = true
+aarch64 = false
+x86_64 = false

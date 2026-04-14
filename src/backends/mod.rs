@@ -159,7 +159,7 @@ async fn find_fnm_appimage(name: &str) -> Result<String> {
 #[post("/api/v1/apps")]
 pub async fn list_apps(is_devel: bool) -> Result<Vec<AppInfo>> {
     let mut apps = Vec::new();
-    let file_path = "/opt/webapp-index/web/config.toml";
+    let file_path = "/opt/webapp-akiapp/web/config.toml";
     let conf_string = read_to_string(file_path)
         .await
         .with_context(|| format!("Failed to read from '{}'", file_path))?;

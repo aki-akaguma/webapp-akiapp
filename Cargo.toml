@@ -1,10 +1,10 @@
 [package]
-name = "index"
+name = "akiapp"
 version = "0.1.2"
 authors = ["aki <aki.akaguma@hotmail.com>"]
 edition = "2021"
 description = """
-This is a webapp that provides web index page.
+This is a webapp that provides aki's web index page.
 """
 keywords = ["webapp"]
 categories = ["desktop", "android"]
@@ -12,7 +12,7 @@ categories = ["desktop", "android"]
 readme = "README.md"
 build = "build.rs"
 rust-version = "1.90.0"
-repository = "https://github.com/aki-akaguma/webapp-index"
+repository = "https://github.com/aki-akaguma/webapp-akiapp"
 
 
 [package.metadata.patch]
@@ -60,15 +60,15 @@ section = "AAA-webapp"
 priority = "optional"
 maintainer = "aki <aki.akaguma@hotmail.com>"
 extended-description = """\
-This is a webapp that provides web index page.
+This is a webapp that provides aki's web index page.
 """
 depends = "$auto"
 separate-debug-symbols = true
 
 assets = [
-    ["target/release/index", "usr/bin/index", "755"],
-    ["target/rust-version-info.txt", "usr/share/doc/index/", "644"],
-    ["README.md", "usr/share/doc/index/", "644"],
+    ["target/release/akiapp", "usr/bin/akiapp", "755"],
+    ["target/rust-version-info.txt", "usr/share/doc/akiapp/", "644"],
+    ["README.md", "usr/share/doc/akiapp/", "644"],
 ]
 
 [profile.release]

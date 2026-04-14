@@ -28,8 +28,8 @@ css-watch:
 	tailwindcss -i ./resources/tailwind.input.css -o ./assets/css/tailwind.css --watch
 
 bundle-web:
-	dx bundle --web --release --base-path "/app"
-	cp -a resources/config.toml target/dx/index/release/web/ && chmod 640 target/dx/index/release/web/config.toml
+	dx bundle --web --release --base-path "/akiapp"
+	cp -a resources/config.toml target/dx/akiapp/release/web/ && chmod 640 target/dx/akiapp/release/web/config.toml
 
 bundle-desktop:
 	dx bundle --desktop --release --package-types appimage
