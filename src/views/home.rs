@@ -43,6 +43,13 @@ pub fn Home() -> Element {
                 p { "{linux_desc}" }
             }
         }
-        List { is_devel: false }
+        List {
+            is_devel: false,
+            desc: crate::components::DescMsg {
+                webapp: webapp_desc.to_string(),
+                android: android_desc.to_string(),
+                linux: linux_desc.to_string(),
+            },
+        }
     }
 }

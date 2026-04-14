@@ -1,4 +1,5 @@
 mod list;
+pub use list::DescMsg;
 pub use list::List;
 
 mod pagenotfound;
