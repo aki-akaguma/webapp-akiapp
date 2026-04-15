@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * renamed app: `webapp-index` to `webapp-akiapp`
 
 ### Fixed
+* android icon
 * download link address
 * link to `Route::`
 * android wva

@@ -27,6 +27,9 @@ css:
 css-watch:
 	tailwindcss -i ./resources/tailwind.input.css -o ./assets/css/tailwind.css --watch
 
+android-icon:
+	~/Android/vd-tool.sh -c -in resources/fav.svg -out resources/android/res/drawable/
+
 bundle-web:
 	dx bundle --web --release --base-path "/akiapp"
 	cp -a resources/config.toml target/dx/akiapp/release/web/ && chmod 640 target/dx/akiapp/release/web/config.toml
