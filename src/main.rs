@@ -1,5 +1,5 @@
 use dioxus::prelude::*;
-#[cfg(all(not(debug_assertions), feature = "desktop"))]
+#[cfg(feature = "desktop")]
 use dioxus_desktop::{Config, WindowBuilder};
 
 mod backends;
@@ -37,7 +37,7 @@ fn main() {
     }
 
     // In the case of only release desktop, set a window title
-    #[cfg(all(not(debug_assertions), feature = "desktop"))]
+    #[cfg(feature = "desktop")]
     dioxus::LaunchBuilder::new()
         .with_cfg(
             Config::default().with_menu(None).with_window(
@@ -49,7 +49,7 @@ fn main() {
         .launch(App);
 
     // In the other case, simple launch app
-    #[cfg(any(debug_assertions, not(feature = "desktop")))]
+    #[cfg(not(feature = "desktop"))]
     dioxus::launch(App);
 }
 
