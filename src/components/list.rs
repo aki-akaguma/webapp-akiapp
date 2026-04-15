@@ -16,6 +16,8 @@ struct AppDialog {
     msg: String,
 }
 
+const BASE_URL: &str = "https://aki.omusubi.org/akiapp";
+
 #[component]
 pub fn List(is_devel: bool, desc: DescMsg) -> Element {
     let apps_r = use_resource(move || async move { crate::backends::list_apps(is_devel).await });
@@ -92,8 +94,6 @@ pub fn AppListRowCm(props: AppListRowProps) -> Element {
     let app_info_s = use_store(|| app_info.clone());
     let apk_fnms_s = use_store(|| app_info_s().apk_fnms().to_vec());
     let appimage_fnms_s = use_store(|| app_info_s().appimage_fnms().to_vec());
-    //                href: "/{app_nm}/",
-    //                    href: "android/{app_nm}/{apk_fnm}",
     rsx! {
         div { class: "app-list-row",
             h3 { class: "app-list-row-h", "{app_nm}" }
@@ -105,7 +105,7 @@ pub fn AppListRowCm(props: AppListRowProps) -> Element {
                         //dioxus::logger::tracing::info!("{_evt:#?}");
                         props.dialog.app_nm().set(app_nm_s());
                         props.dialog.desc().set(desc_s());
-                        props.dialog.a_href().set(format!("/{}/", app_nm_s()));
+                        props.dialog.a_href().set(format!("{BASE_URL}/{}/", app_nm_s()));
                         props.dialog.img_src().set(crate::WEBAPP_IMG.to_string());
                         props.dialog.msg().set(descmsg_s().webapp.clone());
                         let js = r#"document.getElementById("app-list-dialog").showModal();"#;
@@ -127,7 +127,7 @@ pub fn AppListRowCm(props: AppListRowProps) -> Element {
                                 //dioxus::logger::tracing::info!("{_evt:#?}");
                                 props.dialog.app_nm().set(app_nm_s());
                                 props.dialog.desc().set(desc_s());
-                                props.dialog.a_href().set(format!("android/{app_nm}/{apk_fnm}"));
+                                props.dialog.a_href().set(format!("{BASE_URL}/android/{app_nm}/{apk_fnm}"));
                                 props.dialog.img_src().set(crate::ANDROID_IMG.to_string());
                                 props.dialog.msg().set(descmsg_s().android.clone());
                                 let js = r#"document.getElementById("app-list-dialog").showModal();"#;
@@ -151,7 +151,7 @@ pub fn AppListRowCm(props: AppListRowProps) -> Element {
                                 //dioxus::logger::tracing::info!("{_evt:#?}");
                                 props.dialog.app_nm().set(app_nm_s());
                                 props.dialog.desc().set(desc_s());
-                                props.dialog.a_href().set(format!("desktop/{app_nm}/{appimage_fnm}"));
+                                props.dialog.a_href().set(format!("{BASE_URL}/desktop/{app_nm}/{appimage_fnm}"));
                                 props.dialog.img_src().set(crate::LINUX_IMG.to_string());
                                 props.dialog.msg().set(descmsg_s().linux.clone());
                                 let js = r#"document.getElementById("app-list-dialog").showModal();"#;
