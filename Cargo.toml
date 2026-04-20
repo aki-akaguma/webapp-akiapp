@@ -24,18 +24,19 @@ dioxus-fullstack = { path = "./patched/dioxus-fullstack-0.7.5" }
 [dependencies]
 # dioxus family
 dioxus = { version = "0.7.5", features = ["fullstack", "router"] }
-dioxus-fullstack = "0.7.5"
 dioxus-desktop = { version = "0.7.5", optional = true }
 
-# depend on dioxus
-anyhow = { version = "1.0.98" }
-tokio = { version = "1.48", features = ["fs"], optional = true }
-serde = { version = "1.0.219" }
+# what dioxus depends on
+anyhow = { version = "1.0" }
+serde = { version = "1.0" }
 
-# other
-console_error_panic_hook = "0.1"
-toml = "1.1.2"
-semver = "1.0.28"
+# what dioxus depends on, optional
+tokio = { version = "1.48", features = ["fs"], optional = true }
+
+# other, optional
+console_error_panic_hook = { version = "0.1", optional = true }
+semver = { version = "1.0.28", optional = true }
+toml = { version = "1.1.2", optional = true }
 
 [target.'cfg(target_os = "android")'.dependencies]
 openssl = { version = "0.10", features = ["vendored"] }
@@ -47,10 +48,10 @@ rust-version-info-file = "0.2"
 [features]
 default = ["web"]
 
-web = ["dioxus/web"]
+web = ["dioxus/web", "dep:console_error_panic_hook"]
 desktop = ["dioxus/desktop", "dep:dioxus-desktop"]
 mobile = ["dioxus/mobile"]
-server = ["dioxus/server", "dep:tokio"]
+server = ["dioxus/server", "dep:tokio", "dep:toml", "dep:semver"]
 
 debian_build = ["desktop"]
 

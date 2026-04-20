@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Changed
+* I reorganized the dependencies in `Cargo.toml`.
 * `version_compare` to `semver` crate
 
 
