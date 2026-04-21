@@ -20,6 +20,19 @@ mod conf;
 use conf::{ConfApp, Config};
 
 #[cfg(feature = "server")]
+use std::sync::LazyLock;
+
+#[cfg(feature = "server")]
+static CONFIG_PATH: LazyLock<String> = LazyLock::new(|| {
+    std::env::var("AKI_APP_CONFIG_PATH")
+        .unwrap_or_else(|_| "/opt/webapp-akiapp/web/config.toml".to_string())
+});
+
+#[cfg(feature = "server")]
+static DATA_ROOT_DIR: LazyLock<String> =
+    LazyLock::new(|| std::env::var("AKI_APP_DATA_ROOT").unwrap_or_else(|_| "/opt".to_string()));
+
+#[cfg(feature = "server")]
 struct ConfigCache {
     config: Config,
     mtime: SystemTime,
@@ -30,7 +43,7 @@ static CACHE: RwLock<Option<ConfigCache>> = RwLock::const_new(None);
 
 #[cfg(feature = "server")]
 async fn get_config() -> Result<Config> {
-    let file_path = "/opt/webapp-akiapp/web/config.toml";
+    let file_path = &*CONFIG_PATH;
 
     // Get file metadata (to check modification date and time)
     let metadata = tokio::fs::metadata(file_path)
@@ -177,7 +190,8 @@ async fn find_fnm_apk_x86_64(name: &str) -> Result<String> {
 
 #[cfg(feature = "server")]
 async fn find_fnm_apk_file_name(name: &str, file_name: String) -> Result<String> {
-    let file_path = format!("/opt/webapp-{name}/android/{}", &file_name);
+    let root = &*DATA_ROOT_DIR;
+    let file_path = format!("{root}/webapp-{name}/android/{}", &file_name);
     if try_exists(&file_path).await.unwrap_or_default() {
         Ok(file_name)
     } else {
@@ -192,7 +206,8 @@ async fn find_fnm_appimage(name: &str) -> Result<String> {
     //   memboost_0.1.1_x86_64.AppImage
     let ends = "_x86_64.AppImage";
     let mut vec = vec![];
-    let dir_path = format!("/opt/webapp-{name}/desktop");
+    let root = &*DATA_ROOT_DIR;
+    let dir_path = format!("{root}/webapp-{name}/desktop");
     //
     // Error handling in case the directory does not exist
     let mut entries = read_dir(&dir_path)

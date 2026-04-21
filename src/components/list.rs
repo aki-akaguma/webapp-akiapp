@@ -97,42 +97,33 @@ pub fn List(is_devel: bool, desc: DescMsg) -> Element {
     }
 }
 
-#[derive(Props, Debug, Clone, PartialEq)]
-struct AppListRowProps {
-    app_info: crate::backends::AppInfo,
+#[component]
+fn AppListRowCm(
+    app_info: ReadSignal<crate::backends::AppInfo>,
     dialog: Store<AppDialog>,
     desc: DescMsg,
-}
-
-#[component]
-pub fn AppListRowCm(props: AppListRowProps) -> Element {
-    let app_info_sig = use_signal(|| props.app_info.clone());
-    let desc_msg_sig = use_signal(|| props.desc.clone());
-    let dialog = props.dialog;
-    //
-    let app_nm = app_info_sig.read().name().to_string();
-    let desc = app_info_sig.read().desc().to_string();
-    //
+) -> Element {
+    let desc_sig = use_signal(|| desc);
     rsx! {
         div { class: "app-list-row",
-            h3 { class: "app-list-row-h", "{app_nm}" }
-            p { class: "app-list-row-p", "{desc}" }
+            h3 { class: "app-list-row-h", "{app_info.read().name()}" }
+            p { class: "app-list-row-p", "{app_info.read().desc()}" }
             div { class: "app-list-row-links",
                 a {
                     class: "app-list-row-links-a",
-                    onclick: move |_evt| async move {
-                        //dioxus::logger::tracing::info!("{_evt:#?}");
-                        let info = app_info_sig.read();
+                    onclick: move |_evt| {
+                        let info = app_info.read();
                         let name = info.name().to_string();
+                        let desc_text = info.desc().to_string();
                         let base = crate::PUBLIC_URL();
                         let url = format!("{base}/{}/", name);
                         //
                         dialog.app_nm().set(name);
-                        dialog.desc().set(info.desc().to_string());
+                        dialog.desc().set(desc_text);
                         dialog.a_href().set(url);
                         dialog.a_file_name().set("".to_string());
                         dialog.img_src().set(crate::WEBAPP_IMG.to_string());
-                        dialog.msg().set(desc_msg_sig().webapp.clone());
+                        dialog.msg().set(desc_sig.read().webapp.clone());
                         dialog.is_open().set(true);
                     },
                     img {
@@ -142,21 +133,21 @@ pub fn AppListRowCm(props: AppListRowProps) -> Element {
                     }
                 }
                 // APK link
-                for apk_fnm in app_info_sig.read().apk_fnms().to_vec() {
+                for apk_fnm in app_info.read().apk_fnms().to_vec() {
                     a {
                         class: "app-list-row-links-a",
                         onclick: move |_evt| {
-                            let info = app_info_sig.read();
+                            let info = app_info.read();
                             let name = info.name().to_string();
-                            let desc = info.desc().to_string();
-                            let msg = desc_msg_sig.read().android.clone();
+                            let desc_text = info.desc().to_string();
+                            let msg = desc_sig.read().android.clone();
                             let apk = apk_fnm.clone();
                             let base = crate::PUBLIC_URL();
                             //
                             spawn(async move {
                                 let url = format!("{base}/akiapp/android/{name}/{apk}");
                                 dialog.app_nm().set(name);
-                                dialog.desc().set(desc);
+                                dialog.desc().set(desc_text);
                                 dialog.a_href().set(url);
                                 dialog.a_file_name().set(apk);
                                 dialog.img_src().set(crate::ANDROID_IMG.to_string());
@@ -172,21 +163,21 @@ pub fn AppListRowCm(props: AppListRowProps) -> Element {
                     }
                 }
                 // AppImage Link
-                for appimage_fnm in app_info_sig.read().appimage_fnms().to_vec() {
+                for appimage_fnm in app_info.read().appimage_fnms().to_vec() {
                     a {
                         class: "app-list-row-links-a",
                         onclick: move |_evt| {
-                            let info = app_info_sig.read();
+                            let info = app_info.read();
                             let name = info.name().to_string();
-                            let desc = info.desc().to_string();
-                            let msg = desc_msg_sig.read().linux.clone();
+                            let desc_text = info.desc().to_string();
+                            let msg = desc_sig.read().linux.clone();
                             let img_fnm = appimage_fnm.clone();
                             let base = crate::PUBLIC_URL();
                             //
                             spawn(async move {
                                 let url = format!("{base}/akiapp/desktop/{name}/{img_fnm}");
                                 dialog.app_nm().set(name);
-                                dialog.desc().set(desc);
+                                dialog.desc().set(desc_text);
                                 dialog.a_href().set(url);
                                 dialog.a_file_name().set(img_fnm);
                                 dialog.img_src().set(crate::LINUX_IMG.to_string());

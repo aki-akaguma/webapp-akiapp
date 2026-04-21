@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * `tracing`
 
 ### Changed
+* replace hardcoded paths: `/.../config.toml` to using an environment variable
 * `<dialog>` elements open control
 * I reorganized the dependencies in `Cargo.toml`.
 * `version_compare` to `semver` crate
