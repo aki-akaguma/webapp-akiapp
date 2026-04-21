@@ -104,6 +104,24 @@ pub struct AppInfo {
     appimage_fnms: Vec<String>,
 }
 
+#[cfg(feature = "server")]
+enum AndroidArch {
+    Wva,
+    Aarch64,
+    X86_64,
+}
+
+#[cfg(feature = "server")]
+impl AndroidArch {
+    fn suffix(&self) -> &'static str {
+        match self {
+            Self::Wva => "wva",
+            Self::Aarch64 => "aarch64",
+            Self::X86_64 => "x86_64",
+        }
+    }
+}
+
 impl AppInfo {
     #[cfg(feature = "server")]
     async fn from_conf_app(conf_app: &ConfApp) -> Result<AppInfo> {
@@ -112,22 +130,17 @@ impl AppInfo {
         let web = conf_app.is_web();
         let apk_fnms = {
             let mut vec: Vec<String> = vec![];
-            if conf_app.is_android_wva() {
-                let fnm = find_fnm_apk_wva(&name).await?;
-                if !fnm.is_empty() {
-                    vec.push(fnm);
-                }
-            }
-            if conf_app.is_android_aarch64() {
-                let fnm = find_fnm_apk_aarch64(&name).await?;
-                if !fnm.is_empty() {
-                    vec.push(fnm);
-                }
-            }
-            if conf_app.is_android_x86_64() {
-                let fnm = find_fnm_apk_x86_64(&name).await?;
-                if !fnm.is_empty() {
-                    vec.push(fnm);
+            let checks = [
+                (conf_app.is_android_wva(), AndroidArch::Wva),
+                (conf_app.is_android_aarch64(), AndroidArch::Aarch64),
+                (conf_app.is_android_x86_64(), AndroidArch::X86_64),
+            ];
+            for (is_enabled, arch) in checks {
+                if is_enabled {
+                    let fnm = find_fnm_apk(&name, arch).await?;
+                    if !fnm.is_empty() {
+                        vec.push(fnm);
+                    }
                 }
             }
             vec
@@ -165,31 +178,10 @@ impl AppInfo {
 }
 
 #[cfg(feature = "server")]
-async fn find_fnm_apk_wva(name: &str) -> Result<String> {
+async fn find_fnm_apk(name: &str, arch: AndroidArch) -> Result<String> {
     // appimage file name format:
     //   memboost-wva-app-release-signed.apk
-    let file_name = format!("{name}-wva-app-release-signed.apk");
-    find_fnm_apk_file_name(name, file_name).await
-}
-
-#[cfg(feature = "server")]
-async fn find_fnm_apk_aarch64(name: &str) -> Result<String> {
-    // appimage file name format:
-    //   memboost-aarch64-app-release-signed.apk
-    let file_name = format!("{name}-aarch64-app-release-signed.apk");
-    find_fnm_apk_file_name(name, file_name).await
-}
-
-#[cfg(feature = "server")]
-async fn find_fnm_apk_x86_64(name: &str) -> Result<String> {
-    // appimage file name format:
-    //   memboost-x86_64-app-release-signed.apk
-    let file_name = format!("{name}-x86_64-app-release-signed.apk");
-    find_fnm_apk_file_name(name, file_name).await
-}
-
-#[cfg(feature = "server")]
-async fn find_fnm_apk_file_name(name: &str, file_name: String) -> Result<String> {
+    let file_name = format!("{}-{}-app-release-signed.apk", name, arch.suffix());
     let root = &*DATA_ROOT_DIR;
     let file_path = format!("{root}/webapp-{name}/android/{}", &file_name);
     if try_exists(&file_path).await.unwrap_or_default() {

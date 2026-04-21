@@ -5,9 +5,9 @@ use dioxus::prelude::*;
 pub fn Devel() -> Element {
     let page_header = "Aki App Development";
     let page_desc = "These are apps created by Aki. I aimed for simplicity and clarity.";
-    let webapp_desc = "Web application. Tap to use immediately.";
-    let android_desc = "Android APK. Tap to download and install.";
-    let linux_desc = "Linux AppImage. Tap to download and run.";
+    let desc_msg = crate::components::DescMsg::new();
+    //
+    provide_context(desc_msg.clone());
     //
     rsx! {
         div { class: "app-header",
@@ -19,14 +19,7 @@ pub fn Devel() -> Element {
             }
             p { class: "app-header-p", "{page_desc}" }
         }
-        List {
-            is_devel: true,
-            desc: crate::components::DescMsg {
-                webapp: webapp_desc.to_string(),
-                android: android_desc.to_string(),
-                linux: linux_desc.to_string(),
-            },
-        }
+        List { is_devel: true }
         crate::Version {}
     }
 }
