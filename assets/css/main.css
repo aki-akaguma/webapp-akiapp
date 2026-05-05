@@ -14,3 +14,21 @@ body {
 .font-bagel {
     font-family: 'Bagel Fat One', cursive;
 }
+
+/*
+Cursor pointer
+*/
+@layer base {
+    button:not(:disabled),
+    [role="button"]:not(:disabled) {
+        cursor: pointer;
+    }
+}
+
+@layer components {
+    @media(hover: hover) {
+        a:hover {
+            cursor: pointer;
+        }
+    }
+}
