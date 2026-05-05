@@ -64,6 +64,18 @@ aarch64 = false
 x86_64 = false
 
 [[dev_apps]]
+name = "test-dioxus"
+desc = "Test for Dioxus"
+web = true
+[dev_apps.desktop]
+linux = true
+windows = false
+[dev_apps.android]
+wva = true
+aarch64 = false
+x86_64 = false
+
+[[dev_apps]]
 name = "test-inputfile"
 desc = "Testing file input functionality."
 web = true
