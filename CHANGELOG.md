@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * `test-dioxus` into `config.toml`
 
 ### Changed
+* update to 2024 edition
 * UI: cursor pointer on link and button.
 * update crate: dioxus(0.7.7)
 

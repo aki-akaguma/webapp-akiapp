@@ -2,7 +2,7 @@
 name = "akiapp"
 version = "0.1.5"
 authors = ["aki <aki.akaguma@hotmail.com>"]
-edition = "2021"
+edition = "2024"
 description = """
 This is a webapp that provides aki's web index page.
 """
