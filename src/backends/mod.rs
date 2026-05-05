@@ -54,10 +54,9 @@ async fn get_config() -> Result<Config> {
     // 1. First, check if the cache is enabled with a read lock.
     {
         let cache = CACHE.read().await;
-        if let Some(c) = &*cache {
-            if c.mtime >= mtime {
+        if let Some(c) = &*cache
+            && c.mtime >= mtime {
                 return Ok(c.config.clone());
-            }
         }
     }
 
@@ -66,10 +65,9 @@ async fn get_config() -> Result<Config> {
 
     // Double-checked locking:
     // may have been updated by another thread while waiting for lock acquisition.
-    if let Some(c) = &*cache {
-        if c.mtime >= mtime {
+    if let Some(c) = &*cache
+        && c.mtime >= mtime {
             return Ok(c.config.clone());
-        }
     }
 
     // Load and parse the file

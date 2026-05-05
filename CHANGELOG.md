@@ -14,6 +14,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * UI: cursor pointer on link and button.
 * update crate: dioxus(0.7.7)
 
+### Fixed
+* `clippy::collapsible\_if`
 
 ## [0.1.5] (2026-04-26)
 ### Changed
